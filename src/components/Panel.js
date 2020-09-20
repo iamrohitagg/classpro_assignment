@@ -67,7 +67,7 @@ const Panel = () => {
           >
             Submit
           </Button>
-          {showInstallmentAdder ? (
+          {showInstallmentAdder && count == 0 ? (
             <>
               <Button
                 className="d-block mx-auto mt-3"
@@ -139,8 +139,6 @@ const Panel = () => {
         variant="primary"
         className="d-block mx-auto mb-4"
         onClick={() => {
-          console.log();
-          console.log(installment);
           setcount(count + 1);
           makeInstallmentArray(count);
           setshowinstallments(true);
