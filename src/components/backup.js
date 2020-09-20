@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import { InputGroup, FormControl, Button, Card } from "react-bootstrap";
 
 const Panel = () => {
-  // Value from input of installment field
-  const [installmentinput, setinstallmentinput] = useState(0);
   // Array to mantain the installments for a month
   const [installment, setInstallment] = useState([]);
   // Number of months for which installments will be paid
@@ -20,7 +18,7 @@ const Panel = () => {
 
   // Get installment value
   const installmentHandler = (event) => {
-    setinstallmentinput(event.target.value);
+    setInstallment(event.target.value);
   };
 
   // Get months value
@@ -31,16 +29,18 @@ const Panel = () => {
   // Make an array of installments by adding the values to installment array
   const makeInstallmentArray = () => {
     for (let i = 0; i < months; i++) {
-      const installmentpermonth = installmentinput / months;
+      const installmentpermonth = installment / months;
       setInstallment((installment) => installment.concat(installmentpermonth));
     }
   };
+
+  // const [myarr, setmyarr] = useState([1000, 2000, 3000, 4000, 5000]);
 
   // Handle the input amount and apply functionality accordingly
 
   // Display monthly installments on submit of values
   const monthlyInstallments = (count) => {
-    return installment.map((element, count) => (
+    return myarr.map((element, count) => (
       <Card
         className="d-inline-block m-4"
         style={{ width: "18rem" }}
@@ -73,10 +73,10 @@ const Panel = () => {
                 className="d-block mx-auto mt-3"
                 variant="success"
                 onClick={() => {
-                  let newarray = [...installment];
-                  let firstinstallment = installment[0];
+                  let newarray = [...myarr];
+                  let firstinstallment = myarr[0];
                   newarray.splice(0, 2);
-                  setInstallment([firstinstallment - amount, ...newarray]);
+                  setmyarr([firstinstallment - amount, ...newarray]);
                 }}
               >
                 Add to next installment
@@ -85,9 +85,7 @@ const Panel = () => {
                 className="d-block mx-auto mt-3"
                 variant="warning"
                 onClick={() => {
-                  setInstallment((installment) =>
-                    installment.concat(installment[0] - amount)
-                  );
+                  setmyarr((myarr) => myarr.concat(myarr[0] - amount));
                 }}
               >
                 Make new installment
@@ -100,10 +98,10 @@ const Panel = () => {
   };
 
   const handleAmountInput = (i) => {
-    let arr = [...installment];
+    let arr = [...myarr];
     if (arr[i] == amount) {
       arr.splice(i, 1);
-      setInstallment(arr);
+      setmyarr(arr);
       console.log(typeof amount, typeof arr[i]);
     } else if (arr[i] > amount) {
       setshowInstallmentAdder(true);
@@ -139,8 +137,6 @@ const Panel = () => {
         variant="primary"
         className="d-block mx-auto mb-4"
         onClick={() => {
-          console.log();
-          console.log(installment);
           setcount(count + 1);
           makeInstallmentArray(count);
           setshowinstallments(true);
