@@ -92,9 +92,10 @@ const Panel = () => {
                 className="d-block mx-auto mt-3"
                 variant="warning"
                 onClick={() => {
-                  setInstallment((installment) =>
-                    installment.concat(installment[0] - amount)
-                  );
+                  let newarray = [...installment];
+                  let firstinstallment = installment[0];
+                  newarray.splice(0, 1);
+                  setInstallment([firstinstallment - amount, ...newarray]);
                   setshowInstallmentAdder(false);
                 }}
               >
