@@ -77,6 +77,7 @@ const Panel = () => {
                   let firstinstallment = installment[0];
                   newarray.splice(0, 2);
                   setInstallment([firstinstallment - amount, ...newarray]);
+                  setshowInstallmentAdder(false);
                 }}
               >
                 Add to next installment
@@ -88,6 +89,7 @@ const Panel = () => {
                   setInstallment((installment) =>
                     installment.concat(installment[0] - amount)
                   );
+                  setshowInstallmentAdder(false);
                 }}
               >
                 Make new installment
