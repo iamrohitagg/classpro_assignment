@@ -65,7 +65,7 @@ const Panel = () => {
               handleAmountInput(count);
             }}
           >
-            Submit
+            Make payment
           </Button>
           {showInstallmentAdder && count == 0 ? (
             <>
