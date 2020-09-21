@@ -75,8 +75,14 @@ const Panel = () => {
                 onClick={() => {
                   let newarray = [...installment];
                   let firstinstallment = installment[0];
+                  let secondinstallment = installment[1];
                   newarray.splice(0, 2);
-                  setInstallment([firstinstallment - amount, ...newarray]);
+                  setInstallment([
+                    Number(secondinstallment) +
+                      Number(firstinstallment) -
+                      Number(amount),
+                    ...newarray,
+                  ]);
                   setshowInstallmentAdder(false);
                 }}
               >
