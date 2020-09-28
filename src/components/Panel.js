@@ -20,12 +20,16 @@ const Panel = () => {
 
   // Get installment value
   const installmentHandler = (event) => {
-    setinstallmentinput(event.target.value);
+    if (event.target.value <= 0) {
+      alert("Please enter a valid amount ");
+    } else setinstallmentinput(event.target.value);
   };
 
   // Get months value
   const monthHandler = (event) => {
-    setMonths(event.target.value);
+    if (event.target.value <= 0) {
+      alert("Please enter the valid number of months ");
+    } else setMonths(event.target.value);
   };
 
   // Make an array of installments by adding the values to installment array
@@ -34,6 +38,27 @@ const Panel = () => {
       const installmentpermonth = installmentinput / months;
       setInstallment((installment) => installment.concat(installmentpermonth));
     }
+  };
+
+  // Add new installments
+  const addtoNextInstallment = () => {
+    let newarray = [...installment];
+    let firstinstallment = installment[0];
+    let secondinstallment = installment[1];
+    newarray.splice(0, 2);
+    setInstallment([
+      Number(secondinstallment) + Number(firstinstallment) - Number(amount),
+      ...newarray,
+    ]);
+    setshowInstallmentAdder(false);
+  };
+
+  const makeNewInstallment = () => {
+    let newarray = [...installment];
+    let firstinstallment = installment[0];
+    newarray.splice(0, 1);
+    setInstallment([firstinstallment - amount, ...newarray]);
+    setshowInstallmentAdder(false);
   };
 
   // Handle the input amount and apply functionality accordingly
@@ -72,32 +97,14 @@ const Panel = () => {
               <Button
                 className="d-block mx-auto mt-3"
                 variant="success"
-                onClick={() => {
-                  let newarray = [...installment];
-                  let firstinstallment = installment[0];
-                  let secondinstallment = installment[1];
-                  newarray.splice(0, 2);
-                  setInstallment([
-                    Number(secondinstallment) +
-                      Number(firstinstallment) -
-                      Number(amount),
-                    ...newarray,
-                  ]);
-                  setshowInstallmentAdder(false);
-                }}
+                onClick={addtoNextInstallment}
               >
                 Add to next installment
               </Button>
               <Button
                 className="d-block mx-auto mt-3"
                 variant="warning"
-                onClick={() => {
-                  let newarray = [...installment];
-                  let firstinstallment = installment[0];
-                  newarray.splice(0, 1);
-                  setInstallment([firstinstallment - amount, ...newarray]);
-                  setshowInstallmentAdder(false);
-                }}
+                onClick={makeNewInstallment}
               >
                 Make new installment
               </Button>
@@ -113,9 +120,13 @@ const Panel = () => {
     if (arr[i] == amount) {
       arr.splice(i, 1);
       setInstallment(arr);
-      console.log(typeof amount, typeof arr[i]);
     } else if (arr[i] > amount) {
       setshowInstallmentAdder(true);
+    } else if (arr[i] < amount) {
+      let element1 = arr[0];
+      let element2 = arr[1];
+      arr.splice(0, 2);
+      setInstallment([amount - element1 + element2, ...arr]);
     }
   };
 
